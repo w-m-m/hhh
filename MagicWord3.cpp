@@ -22,12 +22,32 @@ struct node{
 };
 
 void readInput(string file_in){
-
+	fstream f;
+	f.open("Input.txt");
+	char ch[50];
+	f.getline(ch,50);
+	string s = ch;
+	istringstream stream(s);
+	stream>>N;
+	stream>>K;
+	//cout<<N<<" "<<K<<endl;
+	f.getline(ch,50);
+	str=ch;
+	//cout<<str<<endl;
+	string spell;
+	int value;
+	while(K--){
+		f.getline(ch,50);
+		s = ch;
+		istringstream stream(s);
+		stream>>spell;
+		stream>>value;
+		spell_value[spell]=value;
+        letter_spells[spell[0]].push_back(spell);	
+        //cout<<spell<<" "<<value<<endl;
+	}
 }
 
-void writeOutput(string file_out){
-
-}
 
 node* spanTree(node *last){
 	string s="",spell="",cut_s="";
@@ -102,24 +122,28 @@ void getResult(){
 		}
 		else	j++;
 	}
-	for(int i=0;i<pos.size();i++){
-		cout<<pos[i]<<" "<<spell[i]<<endl;		
+	ofstream f("Output.txt");
+	if(f.is_open()){
+		for(int i=0;i<pos.size();i++){
+			f<<pos[i]<<" "<<spell[i]<<endl;		
+		}
+		f<<max_value<<endl;
 	}
-	cout<<max_value<<endl;
+	
 }
 
 
 int main(){
-	cin>>N>>K;
-	cin>>str;
-	string spell;
-	int value;
-	while(K--){
-		cin>>spell>>value;
-		spell_value[spell]=value;
-        letter_spells[spell[0]].push_back(spell);
-	}
-
+//	cin>>N>>K;
+//	cin>>str;
+//	string spell;
+//	int value;
+//	while(K--){
+//		cin>>spell>>value;
+//		spell_value[spell]=value;
+//        letter_spells[spell[0]].push_back(spell);
+//	}
+	readInput("Input.txt");
     node *root=new node();
     root->s=str;
     root->cutway="";
